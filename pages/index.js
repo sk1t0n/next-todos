@@ -1,5 +1,11 @@
+import { Row, Col } from 'antd';
+
 const Home = () => (
-  <div>Home page</div>
+  <Row>
+    <Col span="12" offset="6">
+      <div>Home</div>
+    </Col>
+  </Row>
 );
 
 export default Home;

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`check the snapshot 1`] = `
+<DocumentFragment>
+  <footer
+    class="ant-layout-footer footer"
+  >
+    Copyright © 2021
+  </footer>
+</DocumentFragment>
+`;
