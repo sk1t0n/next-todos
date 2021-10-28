@@ -151,7 +151,7 @@ exports[`Layout check the snapshot 1`] = `
       </div>
     </header>
     <main
-      class="ant-layout-content"
+      class="ant-layout-content content"
     />
     <footer
       class="ant-layout-footer footer"

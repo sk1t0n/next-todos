@@ -1,14 +1,15 @@
 import { Layout } from 'antd';
-import styles from '../../styles/Layout.module.less';
+import stylesLayout from '../../styles/Layout.module.less';
+import stylesContent from '../../styles/Content.module.less';
 import Header from './header';
 import Footer from './footer';
 
 const { Content } = Layout;
 
 const _Layout = ({ children }) => (
-  <Layout className={styles.layout}>
+  <Layout className={stylesLayout.layout}>
     <Header />
-    <Content>{ children }</Content>
+    <Content className={stylesContent.content}>{ children }</Content>
     <Footer />
   </Layout>
 );
