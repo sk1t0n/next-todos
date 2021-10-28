@@ -35,7 +35,7 @@ const Header = () => {
         </Col>
         <Col flex="auto">
           <Row justify="space-between">
-            <Col sm={0} md={24}>
+            <Col xs={0} sm={0} md={24}>
               <Menu
                 theme="dark"
                 mode="horizontal"
@@ -45,7 +45,11 @@ const Header = () => {
                 needUpperCase={true}
               />
             </Col>
-            <Col sm={{ span: 3, offset: 21 }} md={0}>
+            <Col
+              xs={{ span: 4, offset: 20 }}
+              sm={{ span: 3, offset: 21 }}
+              md={0}
+            >
               <Hamburger onClick={showDrawer} ref={hamburgerRef} />
               <Drawer
                 title="Navigation"
