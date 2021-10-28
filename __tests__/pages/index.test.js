@@ -9,6 +9,6 @@ describe('Home', () => {
 
   it('should render the heading', () => {
     render(<Home />);
-    expect(screen.getByText(/home/i)).toBeInTheDocument();
+    expect(screen.getByText(/todo list/i)).toBeInTheDocument();
   });
 });
