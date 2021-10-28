@@ -1,8 +1,30 @@
+import { useState } from 'react';
 import { Row, Col, Tabs } from 'antd';
 import TodoList from '../components/todos/TodosList';
+import AddTodo from '../components/todos/AddTodo';
 
 const Home = () => {
-  const handleTabsChange = (e) => console.log(e);
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Todo 1', completed: true },
+    { id: 2, text: 'Todo 2', completed: false },
+    { id: 3, text: 'Todo 3', completed: true },
+    { id: 4, text: 'Todo 4', completed: true },
+    { id: 5, text: 'Todo 5', completed: false },
+    { id: 6, text: 'Todo 6', completed: false },
+    { id: 7, text: 'Todo 7', completed: true },
+    { id: 8, text: 'Todo 8', completed: false },
+    { id: 9, text: 'Todo 9', completed: true },
+    { id: 10, text: 'Todo 10', completed: true },
+    { id: 11, text: 'Todo 11', completed: false },
+    { id: 12, text: 'Todo 12', completed: false },
+    { id: 13, text: 'Todo 13', completed: true },
+    { id: 14, text: 'Todo 14', completed: false },
+    { id: 15, text: 'Todo 15', completed: true },
+  ]);
+
+  const changeTodos = (todo) => {
+    setTodos((todos) => [...todos, todo]);
+  };
 
   return (
     <Row>
@@ -12,12 +34,12 @@ const Home = () => {
         sm={{ span: 20, offset: 2 }}
         xs={{ span: 22, offset: 1 }}
       >
-        <Tabs defaultActiveKey="1" onChange={handleTabsChange}>
-          <Tabs.TabPane tab="Show todo list" key="1">
-            <TodoList />
+        <Tabs defaultActiveKey="1">
+          <Tabs.TabPane tab="Show task list" key="1">
+            <TodoList todos={todos} />
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Add todo" key="2">
-            Add Todo
+          <Tabs.TabPane tab="Add a task" key="2">
+            <AddTodo changeTodos={changeTodos} />
           </Tabs.TabPane>
         </Tabs>
       </Col>

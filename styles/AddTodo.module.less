@@ -1,0 +1,14 @@
+@resetBgColor: #f5222d;
+
+.reset {
+  margin-left: 10px;
+  background-color: @resetBgColor;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: lighten(@resetBgColor, 10%);
+    color: #fff;
+    border-color: #fff;
+  }
+}

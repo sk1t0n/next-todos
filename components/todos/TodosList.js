@@ -1,6 +1,6 @@
 import { Table, Checkbox, Button } from 'antd';
 
-const TodoList = () => {
+const TodoList = ({ todos }) => {
   const columns = [
     {
       title: 'Text', dataIndex: 'text', key: 'text',
@@ -36,23 +36,10 @@ const TodoList = () => {
     },
   ];
 
-  const dataSource = [
-    { id: 1, text: 'Todo 1', completed: true, key: 'todo1' },
-    { id: 2, text: 'Todo 2', completed: false, key: 'todo2' },
-    { id: 3, text: 'Todo 3', completed: true, key: 'todo3' },
-    { id: 4, text: 'Todo 4', completed: true, key: 'todo4' },
-    { id: 5, text: 'Todo 5', completed: false, key: 'todo5' },
-    { id: 6, text: 'Todo 6', completed: false, key: 'todo6' },
-    { id: 7, text: 'Todo 7', completed: true, key: 'todo7' },
-    { id: 8, text: 'Todo 8', completed: false, key: 'todo8' },
-    { id: 9, text: 'Todo 9', completed: true, key: 'todo9' },
-    { id: 10, text: 'Todo 10', completed: true, key: 'todo10' },
-    { id: 11, text: 'Todo 11', completed: false, key: 'todo11' },
-    { id: 12, text: 'Todo 12', completed: false, key: 'todo12' },
-    { id: 13, text: 'Todo 13', completed: true, key: 'todo13' },
-    { id: 14, text: 'Todo 14', completed: false, key: 'todo14' },
-    { id: 15, text: 'Todo 15', completed: true, key: 'todo15' },
-  ];
+  const dataSource = todos.map(todo => ({
+    ...todo,
+    key: String(todo['id'])
+  }));
 
   const onChange = (pagination, filters, sorter) => {
     console.log(pagination, filters, sorter);

@@ -9,7 +9,7 @@ exports[`Menu check the snapshot 1`] = `
     tabindex="0"
   >
     <li
-      class="ant-menu-overflow-item ant-menu-item ant-menu-item-only-child"
+      class="ant-menu-overflow-item ant-menu-item ant-menu-item-selected ant-menu-item-only-child"
       data-menu-id="rc-menu-uuid-test-home"
       role="menuitem"
       style="opacity: 1; order: 0;"

@@ -33,7 +33,7 @@ exports[`Home check the snapshot 1`] = `
                   role="tab"
                   tabindex="0"
                 >
-                  Show todo list
+                  Show task list
                 </div>
               </div>
               <div
@@ -47,7 +47,7 @@ exports[`Home check the snapshot 1`] = `
                   role="tab"
                   tabindex="0"
                 >
-                  Add todo
+                  Add a task
                 </div>
               </div>
               <div
@@ -140,7 +140,7 @@ exports[`Home check the snapshot 1`] = `
                                     <span
                                       class="ant-table-column-title"
                                     >
-                                      Title
+                                      Text
                                     </span>
                                     <span
                                       class="ant-table-column-sorter ant-table-column-sorter-full"
@@ -294,7 +294,7 @@ exports[`Home check the snapshot 1`] = `
                             >
                               <tr
                                 class="ant-table-row ant-table-row-level-0"
-                                data-row-key="todo1"
+                                data-row-key="1"
                               >
                                 <td
                                   class="ant-table-cell"
@@ -338,7 +338,7 @@ exports[`Home check the snapshot 1`] = `
                               </tr>
                               <tr
                                 class="ant-table-row ant-table-row-level-0"
-                                data-row-key="todo2"
+                                data-row-key="2"
                               >
                                 <td
                                   class="ant-table-cell"
@@ -381,7 +381,7 @@ exports[`Home check the snapshot 1`] = `
                               </tr>
                               <tr
                                 class="ant-table-row ant-table-row-level-0"
-                                data-row-key="todo3"
+                                data-row-key="3"
                               >
                                 <td
                                   class="ant-table-cell"
@@ -425,7 +425,7 @@ exports[`Home check the snapshot 1`] = `
                               </tr>
                               <tr
                                 class="ant-table-row ant-table-row-level-0"
-                                data-row-key="todo4"
+                                data-row-key="4"
                               >
                                 <td
                                   class="ant-table-cell"
@@ -469,7 +469,7 @@ exports[`Home check the snapshot 1`] = `
                               </tr>
                               <tr
                                 class="ant-table-row ant-table-row-level-0"
-                                data-row-key="todo5"
+                                data-row-key="5"
                               >
                                 <td
                                   class="ant-table-cell"
