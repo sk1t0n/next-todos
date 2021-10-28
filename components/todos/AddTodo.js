@@ -2,7 +2,7 @@ import styles from '../../styles/AddTodo.module.less';
 import { Form, Input, Button, message } from 'antd';
 import PropTypes from 'prop-types';
 
-const AddTodo = ({ changeTodos }) => {
+const AddTodo = ({ onChangeTodos }) => {
   const [form] = Form.useForm();
 
   const onFinish = ({ text }) => {
@@ -11,7 +11,7 @@ const AddTodo = ({ changeTodos }) => {
       text,
       completed: false
     };
-    changeTodos(todo);
+    onChangeTodos(todo);
     form.resetFields();
     message.info('Task was successfully added!');
   };
@@ -66,7 +66,7 @@ const AddTodo = ({ changeTodos }) => {
 }
 
 AddTodo.propTypes = {
-  changeTodos: PropTypes.func.isRequired
+  onChangeTodos: PropTypes.func.isRequired
 };
 
 export default AddTodo;

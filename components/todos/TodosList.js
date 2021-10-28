@@ -1,6 +1,7 @@
 import { Table, Checkbox, Button } from 'antd';
+import PropTypes from 'prop-types';
 
-const TodoList = ({ todos }) => {
+const TodoList = ({ todos, onRemoveTodo }) => {
   const columns = [
     {
       title: 'Text', dataIndex: 'text', key: 'text',
@@ -28,7 +29,7 @@ const TodoList = ({ todos }) => {
           type="primary"
           danger
           block
-          onClick={() => console.log(id)}
+          onClick={() => onRemoveTodo(id)}
         >
           Remove
         </Button>
@@ -57,6 +58,10 @@ const TodoList = ({ todos }) => {
       }}
     />
   );
+};
+
+TodoList.propTypes = {
+  onRemoveTodo: PropTypes.func.isRequired
 };
 
 export default TodoList;

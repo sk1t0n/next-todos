@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Row, Col, Tabs } from 'antd';
+import { Row, Col, Tabs, message } from 'antd';
 import TodoList from '../components/todos/TodosList';
 import AddTodo from '../components/todos/AddTodo';
 
@@ -22,9 +22,13 @@ const Home = () => {
     { id: 15, text: 'Todo 15', completed: true },
   ]);
 
-  const changeTodos = (todo) => {
-    setTodos((todos) => [...todos, todo]);
-  };
+  const addTodo = todo => setTodos(todos => [...todos, todo]);
+
+  const removeTodo = id => {
+    const newTodos = todos.filter(todo => todo.id !== id);
+    setTodos(newTodos);
+    message.info('The task was successfully deleted!');
+  }
 
   return (
     <Row>
@@ -36,10 +40,10 @@ const Home = () => {
       >
         <Tabs defaultActiveKey="1">
           <Tabs.TabPane tab="Show task list" key="1">
-            <TodoList todos={todos} />
+            <TodoList todos={todos} onRemoveTodo={removeTodo} />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Add a task" key="2">
-            <AddTodo changeTodos={changeTodos} />
+            <AddTodo onChangeTodos={addTodo} />
           </Tabs.TabPane>
         </Tabs>
       </Col>
