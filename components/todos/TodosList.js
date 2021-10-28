@@ -59,19 +59,16 @@ const TodoList = () => {
   }
 
   return (
-    <div>
-      <h2>Todo list</h2>
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        onChange={onChange}
-        pagination={{
-          defaultPageSize: '5',
-          showSizeChanger: true,
-          pageSizeOptions: [5, 10, 15, 20]
-        }}
-      />
-    </div>
+    <Table
+      dataSource={dataSource}
+      columns={columns}
+      onChange={onChange}
+      pagination={{
+        defaultPageSize: '5',
+        showSizeChanger: true,
+        pageSizeOptions: [5, 10, 15, 20]
+      }}
+    />
   );
 };
 

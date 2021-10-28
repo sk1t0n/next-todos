@@ -27,7 +27,7 @@ exports[`Layout check the snapshot 1`] = `
             class="ant-row ant-row-space-between"
           >
             <div
-              class="ant-col ant-col-sm-0 ant-col-md-24"
+              class="ant-col ant-col-xs-0 ant-col-sm-0 ant-col-md-24"
             >
               <ul
                 class="ant-menu-overflow ant-menu ant-menu-root ant-menu-horizontal ant-menu-dark"
@@ -130,7 +130,7 @@ exports[`Layout check the snapshot 1`] = `
               />
             </div>
             <div
-              class="ant-col ant-col-sm-3 ant-col-sm-offset-21 ant-col-md-0"
+              class="ant-col ant-col-xs-4 ant-col-xs-offset-20 ant-col-sm-3 ant-col-sm-offset-21 ant-col-md-0"
             >
               <div
                 class="hamburger__Button-sc-5giryv-0 dKTYzt"
