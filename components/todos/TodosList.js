@@ -1,7 +1,11 @@
-import { Table, Checkbox, Button } from 'antd';
-import PropTypes from 'prop-types';
+import { Table, Checkbox, Button, message } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateTodo, removeTodo } from '../../store/todoSlice';
 
-const TodoList = ({ todos, onRemoveTodo, onChangeTodo }) => {
+const TodoList = () => {
+  const todos = useSelector(state => state.todos.todos);
+  const dispatch = useDispatch();
+
   const columns = [
     {
       title: 'Text',
@@ -30,7 +34,10 @@ const TodoList = ({ todos, onRemoveTodo, onChangeTodo }) => {
           <Checkbox
             style={{ display: 'flex', justifyContent: 'center' }}
             defaultChecked={completed}
-            onChange={() => onChangeTodo(id)}
+            onChange={() => {
+              dispatch(updateTodo({ id }));
+              message.info('The task was successfully updated!');
+            }}
           />
         );
       },
@@ -50,7 +57,10 @@ const TodoList = ({ todos, onRemoveTodo, onChangeTodo }) => {
           type="primary"
           danger
           block
-          onClick={() => onRemoveTodo(id)}
+          onClick={() => {
+            dispatch(removeTodo({ id }));
+            message.info('The task was successfully deleted!');
+          }}
         >
           Remove
         </Button>
@@ -74,19 +84,6 @@ const TodoList = ({ todos, onRemoveTodo, onChangeTodo }) => {
       }}
     />
   );
-};
-
-TodoList.propTypes = {
-  todos: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string
-    ]),
-    text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired
-  })).isRequired,
-  onRemoveTodo: PropTypes.func.isRequired,
-  onChangeTodo: PropTypes.func.isRequired
 };
 
 export default TodoList;

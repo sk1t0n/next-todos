@@ -1,8 +1,10 @@
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Layout, Row, Col, Drawer } from 'antd';
 import styles from '../../styles/Header.module.less';
 import Menu from '../navbar/menu';
 import Hamburger from '../navbar/hamburger';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrent as setCurrentMenuItem } from '../../store/menuSlice';
 
 const Header = () => {
   const [visibleDrawer, setVisibleDrawer] = useState(false);
@@ -13,8 +15,11 @@ const Header = () => {
     hamburgerRef.current.classList.toggle('close');
   };
 
-  const [currentItemMenu, setCurrentItemMenu] = useState('home');
-  const onClickMenu = item => setCurrentItemMenu(item.key);
+  const dispatch = useDispatch();
+  const currentMenuItem = useSelector(state => state.menu.current);
+  const onClickMenu = item => {
+    dispatch(setCurrentMenuItem({ current: item.key }));
+  };
 
   const items = {
     leftMenu: [
@@ -40,7 +45,7 @@ const Header = () => {
                 theme="dark"
                 mode="horizontal"
                 onClick={onClickMenu}
-                selectedKeys={[currentItemMenu]}
+                selectedKeys={[currentMenuItem]}
                 items={items}
                 needUpperCase={true}
               />
@@ -62,7 +67,7 @@ const Header = () => {
                   theme="light"
                   mode="inline"
                   onClick={onClickMenu}
-                  selectedKeys={[currentItemMenu]}
+                  selectedKeys={[currentMenuItem]}
                   items={items}
                 />
               </Drawer>

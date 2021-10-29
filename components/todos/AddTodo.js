@@ -1,18 +1,16 @@
 import styles from '../../styles/AddTodo.module.less';
 import { Form, Input, Button, message } from 'antd';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../../store/todoSlice';
 
-const AddTodo = ({ onChangeTodos }) => {
+const AddTodo = () => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
   const onFinish = ({ text }) => {
-    const todo = {
-      id: Date.now(),
-      text,
-      completed: false
-    };
-    onChangeTodos(todo);
+    dispatch(addTodo({ text }));
     form.resetFields();
+    message.info('Task was successfully added!');
   };
 
   const onFinishFailed = (e) => message.error(
@@ -63,9 +61,5 @@ const AddTodo = ({ onChangeTodos }) => {
     </Form>
   );
 }
-
-AddTodo.propTypes = {
-  onChangeTodos: PropTypes.func.isRequired
-};
 
 export default AddTodo;
