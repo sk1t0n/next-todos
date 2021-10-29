@@ -22,13 +22,27 @@ const Home = () => {
     { id: 15, text: 'Todo 15', completed: true },
   ]);
 
-  const addTodo = todo => setTodos(todos => [...todos, todo]);
+  const addTodo = todo => {
+    setTodos(todos => [...todos, todo]);
+    message.info('Task was successfully added!');
+  };
 
   const removeTodo = id => {
-    const newTodos = todos.filter(todo => todo.id !== id);
-    setTodos(newTodos);
+    setTodos(todos.filter(todo => todo.id !== id));
     message.info('The task was successfully deleted!');
   }
+
+  const updateTodo = id => {
+    setTodos(todos.map(todo => {
+      if (todo.id !== id) return todo;
+
+      return {
+        ...todo,
+        completed: !todo.completed
+      };
+    }));
+    message.info('The task was successfully updated!');
+  };
 
   return (
     <Row>
@@ -40,7 +54,11 @@ const Home = () => {
       >
         <Tabs defaultActiveKey="1">
           <Tabs.TabPane tab="Show task list" key="1">
-            <TodoList todos={todos} onRemoveTodo={removeTodo} />
+            <TodoList
+              todos={todos}
+              onRemoveTodo={removeTodo}
+              onChangeTodo={updateTodo}
+            />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Add a task" key="2">
             <AddTodo onChangeTodos={addTodo} />

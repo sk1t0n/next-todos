@@ -299,7 +299,11 @@ exports[`Home check the snapshot 1`] = `
                                 <td
                                   class="ant-table-cell"
                                 >
-                                  Todo 1
+                                  <span
+                                    style="text-decoration: line-through;"
+                                  >
+                                    Todo 1
+                                  </span>
                                 </td>
                                 <td
                                   class="ant-table-cell"
@@ -343,7 +347,9 @@ exports[`Home check the snapshot 1`] = `
                                 <td
                                   class="ant-table-cell"
                                 >
-                                  Todo 2
+                                  <span>
+                                    Todo 2
+                                  </span>
                                 </td>
                                 <td
                                   class="ant-table-cell"
@@ -386,7 +392,11 @@ exports[`Home check the snapshot 1`] = `
                                 <td
                                   class="ant-table-cell"
                                 >
-                                  Todo 3
+                                  <span
+                                    style="text-decoration: line-through;"
+                                  >
+                                    Todo 3
+                                  </span>
                                 </td>
                                 <td
                                   class="ant-table-cell"
@@ -430,7 +440,11 @@ exports[`Home check the snapshot 1`] = `
                                 <td
                                   class="ant-table-cell"
                                 >
-                                  Todo 4
+                                  <span
+                                    style="text-decoration: line-through;"
+                                  >
+                                    Todo 4
+                                  </span>
                                 </td>
                                 <td
                                   class="ant-table-cell"
@@ -474,7 +488,9 @@ exports[`Home check the snapshot 1`] = `
                                 <td
                                   class="ant-table-cell"
                                 >
-                                  Todo 5
+                                  <span>
+                                    Todo 5
+                                  </span>
                                 </td>
                                 <td
                                   class="ant-table-cell"

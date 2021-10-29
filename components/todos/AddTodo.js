@@ -13,7 +13,6 @@ const AddTodo = ({ onChangeTodos }) => {
     };
     onChangeTodos(todo);
     form.resetFields();
-    message.info('Task was successfully added!');
   };
 
   const onFinishFailed = (e) => message.error(
