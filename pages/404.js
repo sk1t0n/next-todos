@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Row, Col, Alert } from 'antd';
@@ -15,6 +16,10 @@ export default function NotFound() {
   }, [router, dispatch]);
 
   return (
+    <>
+      <Head>
+        <title>404 - Not found</title>
+      </Head>
       <Row>
         <Col span="12" offset="6">
           <Alert
@@ -26,5 +31,6 @@ export default function NotFound() {
           />
         </Col>
       </Row>
+    </>
   );
 }
