@@ -18,7 +18,11 @@ exports[`Menu check the snapshot 1`] = `
       <span
         class="ant-menu-title-content"
       >
-        Home
+        <a
+          href="/"
+        >
+          Home
+        </a>
       </span>
     </li>
     <li
@@ -30,7 +34,11 @@ exports[`Menu check the snapshot 1`] = `
       <span
         class="ant-menu-title-content"
       >
-        About
+        <a
+          href="/about"
+        >
+          About
+        </a>
       </span>
     </li>
     <li
@@ -42,7 +50,11 @@ exports[`Menu check the snapshot 1`] = `
       <span
         class="ant-menu-title-content"
       >
-        Register
+        <a
+          href="/register"
+        >
+          Register
+        </a>
       </span>
     </li>
     <li
@@ -54,7 +66,11 @@ exports[`Menu check the snapshot 1`] = `
       <span
         class="ant-menu-title-content"
       >
-        Sign In
+        <a
+          href="/sign-in"
+        >
+          Sign In
+        </a>
       </span>
     </li>
     <li

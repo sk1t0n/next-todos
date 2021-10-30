@@ -9,12 +9,12 @@ describe('Menu', () => {
     const selectedKeys = ['home'];
     const items = {
       leftMenu: [
-        { key: 'home', text: 'Home' },
-        { key: 'about', text: 'About' }
+        { key: 'home', text: 'Home', path: '/' },
+        { key: 'about', text: 'About', path: '/about' }
       ],
       rightMenu: [
-        { key: 'register', text: 'Register' },
-        { key: 'signin', text: 'Sign In' }
+        { key: 'register', text: 'Register', path: '/register' },
+        { key: 'signin', text: 'Sign In', path: '/sign-in' }
       ]
     };
     const { asFragment } = render(

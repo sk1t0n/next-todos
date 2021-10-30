@@ -42,7 +42,11 @@ exports[`Header check the snapshot 1`] = `
                 <span
                   class="ant-menu-title-content"
                 >
-                  HOME
+                  <a
+                    href="/"
+                  >
+                    HOME
+                  </a>
                 </span>
               </li>
               <li
@@ -54,7 +58,11 @@ exports[`Header check the snapshot 1`] = `
                 <span
                   class="ant-menu-title-content"
                 >
-                  ABOUT
+                  <a
+                    href="/about"
+                  >
+                    ABOUT
+                  </a>
                 </span>
               </li>
               <li
@@ -66,7 +74,11 @@ exports[`Header check the snapshot 1`] = `
                 <span
                   class="ant-menu-title-content"
                 >
-                  REGISTER
+                  <a
+                    href="/register"
+                  >
+                    REGISTER
+                  </a>
                 </span>
               </li>
               <li
@@ -78,7 +90,11 @@ exports[`Header check the snapshot 1`] = `
                 <span
                   class="ant-menu-title-content"
                 >
-                  SIGN IN
+                  <a
+                    href="/sign-in"
+                  >
+                    SIGN IN
+                  </a>
                 </span>
               </li>
               <li
