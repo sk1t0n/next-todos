@@ -1,9 +1,9 @@
-import { render } from '@testing-library/react';
+import { renderWithRedux } from '../../../store/utils';
 import Header from '../../../components/layout/header';
 
 describe('Header', () => {
   it('check the snapshot', () => {
-    const { asFragment } = render(<Header />);
+    const { asFragment } = renderWithRedux(<Header />);
     expect(asFragment()).toMatchSnapshot();
   });
 });
