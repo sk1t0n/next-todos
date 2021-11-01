@@ -1,9 +1,35 @@
 import Head from 'next/head';
 import { Row, Col, Tabs } from 'antd';
+import { useDispatch } from 'react-redux';
+import { setTodos } from '../store/todoSlice';
 import TodoList from '../components/todos/TodosList';
 import AddTodo from '../components/todos/AddTodo';
 
-const Home = () => {
+export async function getStaticProps() {
+  const url = 'https://jsonplaceholder.typicode.com/todos?_limit=30';
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (Object.keys(data).length === 0) {
+    return {
+      notFound: true
+    };
+  }
+
+  return {
+    props: {
+      data
+    }
+  };
+}
+
+const Home = ({ data }) => {
+  const dispatch = useDispatch();
+  const todos = data.map(todo => {
+    return {...todo, text: todo.title};
+  });
+  dispatch(setTodos({ todos }));
+
   return (
     <>
       <Head>
