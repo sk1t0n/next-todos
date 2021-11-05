@@ -1,16 +1,19 @@
+import React from 'react';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Row, Col, Alert } from 'antd';
 import { useDispatch } from 'react-redux';
-import { setCurrent as setCurrentMenuItem } from '../store/menuSlice';
+import { setCurrent as setCurrentMenuItem } from '../store/slices/menuSlice';
 
-export default function NotFound() {
+type EffectCallbackReturnType = () => any;
+
+const NotFound: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   dispatch(setCurrentMenuItem({ current: '' }));
 
-  useEffect(() => {
+  useEffect((): EffectCallbackReturnType => {
     setTimeout(() => router.push('/'), 2000);
     return () => dispatch(setCurrentMenuItem({ current: 'home' }));
   }, [router, dispatch]);
@@ -34,3 +37,5 @@ export default function NotFound() {
     </>
   );
 }
+
+export default NotFound;

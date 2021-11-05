@@ -1,4 +1,4 @@
-import reducer, { setCurrent } from '../../store/menuSlice';
+import reducer, { setCurrent } from '../../store/slices/menuSlice';
 
 describe('menuSlice', () => {
   it('should return the initial state', () => {

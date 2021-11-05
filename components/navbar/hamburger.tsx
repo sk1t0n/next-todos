@@ -1,6 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+type Props = {
+  onClick: () => void;
+};
 
 const Button = styled.div`
   position: relative;
@@ -64,12 +67,12 @@ const Line3 = styled.div`
   }
 `;
 
-const handleClick = (ref, onClick) => {
+const handleClick = (ref: any, onClick: () => void) => {
   ref.current.classList.toggle('close');
   onClick();
 };
 
-const Hamburger = React.forwardRef(({ onClick }, ref) => (
+const Hamburger = React.forwardRef<HTMLDivElement, Props>(({ onClick }, ref) => (
   <Button
     ref={ref}
     onClick={() => handleClick(ref, onClick)}
@@ -80,9 +83,5 @@ const Hamburger = React.forwardRef(({ onClick }, ref) => (
   </Button>
 ));
 Hamburger.displayName = 'Hamburger';
-
-Hamburger.propTypes = {
-  onClick: PropTypes.func.isRequired
-};
 
 export default Hamburger;

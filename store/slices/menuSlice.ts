@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export type MenuState = {
+  current: string;
+}
+
+const initialState: MenuState = {
+  current: 'home',
+};
+
 const menuSlice = createSlice({
   name: 'menu',
-  initialState: {
-    current: 'home'
-  },
+  initialState,
   reducers: {
     setCurrent: (state, action) => {
       state.current = action.payload.current;

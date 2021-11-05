@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hamburger check the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="hamburger__Button-sc-1cfzf5o-0 ZPuhh"
+  >
+    <div
+      class="hamburger__Line1-sc-1cfzf5o-1 jGomaN"
+    />
+    <div
+      class="hamburger__Line2-sc-1cfzf5o-2 iCtxxV"
+    />
+    <div
+      class="hamburger__Line3-sc-1cfzf5o-3 eqZccE"
+    />
+  </div>
+</DocumentFragment>
+`;

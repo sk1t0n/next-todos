@@ -1,9 +1,17 @@
+import React from 'react';
 import Head from 'next/head';
 import { Row, Col, Tabs } from 'antd';
 import { useDispatch } from 'react-redux';
-import { setTodos } from '../store/todoSlice';
+import { setTodos } from '../store/slices/todoSlice';
 import TodoList from '../components/todos/TodosList';
 import AddTodo from '../components/todos/AddTodo';
+import { Todo } from '../components/todos/types';
+
+type FetchTodo = Todo & {title: string};
+
+type Props = {
+  data: Array<FetchTodo>
+};
 
 export async function getStaticProps() {
   const url = 'https://jsonplaceholder.typicode.com/todos?_limit=30';
@@ -23,7 +31,7 @@ export async function getStaticProps() {
   };
 }
 
-const Home = ({ data }) => {
+const Home: React.FC<Props> = ({ data }) => {
   const dispatch = useDispatch();
   const todos = data.map(todo => {
     return {...todo, text: todo.title};

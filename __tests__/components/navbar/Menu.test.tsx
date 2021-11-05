@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import Menu from '../../../components/navbar/menu';
+import { MenuItems } from '../../../components/navbar/menu'; 
 
 describe('Menu', () => {
   it('check the snapshot', async () => {
@@ -7,7 +8,7 @@ describe('Menu', () => {
     const mode = 'horizontal';
     const onClick = jest.fn();
     const selectedKeys = ['home'];
-    const items = {
+    const items: MenuItems = {
       leftMenu: [
         { key: 'home', text: 'Home', path: '/' },
         { key: 'about', text: 'About', path: '/about' }

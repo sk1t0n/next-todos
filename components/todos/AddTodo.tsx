@@ -1,25 +1,31 @@
+import React from 'react';
 import styles from '../../styles/AddTodo.module.less';
 import { Form, Input, Button, message } from 'antd';
+import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import { useDispatch } from 'react-redux';
-import { addTodo } from '../../store/todoSlice';
+import { addTodo } from '../../store/slices/todoSlice';
 
-const AddTodo = () => {
+type FinishHandler = (
+  values: {
+    text: string
+  }
+) => void;
+
+const AddTodo: React.FC = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
-  const onFinish = ({ text }) => {
+  const onFinish: FinishHandler = ({ text }) => {
     dispatch(addTodo({ text }));
     form.resetFields();
     message.info('Task was successfully added!');
   };
 
-  const onFinishFailed = (e) => message.error(
-    e.errorFields[0].errors[0]
-  );
-
-  const onReset = () => {
-    form.resetFields();
+  const onFinishFailed = (e: ValidateErrorEntity) => {
+    message.error(e.errorFields[0].errors[0]);
   };
+
+  const onReset = () => form.resetFields();
 
   return (
     <Form

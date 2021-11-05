@@ -1,27 +1,32 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Layout, Row, Col, Drawer } from 'antd';
+import { MenuClickEventHandler } from 'rc-menu/lib/interface';
 import styles from '../../styles/Header.module.less';
 import Menu from '../navbar/menu';
 import Hamburger from '../navbar/hamburger';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrent as setCurrentMenuItem } from '../../store/menuSlice';
+import { setCurrent as setCurrentMenuItem } from '../../store/slices/menuSlice';
+import { MenuItems } from '../navbar/menu';
+import { MenuState } from '../../store/slices/menuSlice';
 
-const Header = () => {
+const Header: React.FC = () => {
   const [visibleDrawer, setVisibleDrawer] = useState(false);
-  const hamburgerRef = useRef();
-  const showDrawer = () => setVisibleDrawer(true);
-  const closeDrawer = () => {
+  const hamburgerRef = useRef<HTMLDivElement>();
+  const showDrawerHandler = () => setVisibleDrawer(true);
+  const closeDrawerHandler = () => {
     setVisibleDrawer(false);
     hamburgerRef.current.classList.toggle('close');
   };
 
   const dispatch = useDispatch();
-  const currentMenuItem = useSelector(state => state.menu.current);
-  const onClickMenu = item => {
+  const currentMenuItem = useSelector((state: {menu: MenuState}) => (
+    state.menu.current
+  ));
+  const menuHandler: MenuClickEventHandler = (item) => {
     dispatch(setCurrentMenuItem({ current: item.key }));
   };
 
-  const items = {
+  const items: MenuItems = {
     leftMenu: [
       { key: 'home', text: 'Home', path: '/' },
       { key: 'about', text: 'About', path: '/about' }
@@ -44,7 +49,7 @@ const Header = () => {
               <Menu
                 theme="dark"
                 mode="horizontal"
-                onClick={onClickMenu}
+                onClick={menuHandler}
                 selectedKeys={[currentMenuItem]}
                 items={items}
                 needUpperCase={true}
@@ -55,18 +60,18 @@ const Header = () => {
               sm={{ span: 3, offset: 21 }}
               md={0}
             >
-              <Hamburger onClick={showDrawer} ref={hamburgerRef} />
+              <Hamburger onClick={showDrawerHandler} ref={hamburgerRef} />
               <Drawer
                 title="Navigation"
                 placement="left"
                 closable={false}
                 visible={visibleDrawer}
-                onClose={closeDrawer}
+                onClose={closeDrawerHandler}
               >
                 <Menu
                   theme="light"
                   mode="inline"
-                  onClick={onClickMenu}
+                  onClick={menuHandler}
                   selectedKeys={[currentMenuItem]}
                   items={items}
                 />

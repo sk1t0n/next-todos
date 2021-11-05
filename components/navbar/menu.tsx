@@ -1,8 +1,25 @@
+import React from 'react';
 import Link from 'next/link';
 import { Menu } from 'antd';
-import PropTypes from 'prop-types';
+import { MenuProps } from 'antd/es/menu'; 
 
-const _Menu = ({
+type MenuItem = {
+  key: string;
+  text: string;
+  path: string;
+};
+
+export type MenuItems = {
+  leftMenu: Array<MenuItem> | [];
+  rightMenu: Array<MenuItem> | [];
+};
+
+interface Props extends MenuProps {
+  items: MenuItems;
+  needUpperCase?: boolean;
+}
+
+const _Menu: React.FC<Props> = ({
   theme,
   mode,
   onClick,
@@ -34,30 +51,6 @@ const _Menu = ({
       ))}
     </Menu>
   );
-};
-
-_Menu.propTypes = {
-  theme: PropTypes.string.isRequired,
-  mode: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  selectedKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
-  items: PropTypes.shape({
-    leftMenu: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-        path: PropTypes.string.isRequired
-      })
-    ).isRequired,
-    rightMenu: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-        path: PropTypes.string.isRequired
-      })
-    ).isRequired
-  }).isRequired,
-  needUpperCase: PropTypes.bool
 };
 
 export default _Menu;

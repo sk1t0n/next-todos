@@ -1,12 +1,16 @@
+import React from 'react';
 import { Table, Checkbox, Button, message } from 'antd';
+import { ColumnsType } from 'antd/es/table';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTodo, removeTodo } from '../../store/todoSlice';
+import { updateTodo, removeTodo } from '../../store/slices/todoSlice';
+import { Todo } from './types';
+import { TodoState } from '../../store/slices/todoSlice';
 
-const TodoList = () => {
-  const todos = useSelector(state => state.todos.todos);
+const TodoList: React.FC = () => {
+  const todos = useSelector((state: {todos: TodoState}) => state.todos.todos);
   const dispatch = useDispatch();
 
-  const columns = [
+  const columns: ColumnsType<Todo> = [
     {
       title: 'Text',
       dataIndex: ['text'],
@@ -70,7 +74,7 @@ const TodoList = () => {
 
   const dataSource = todos.map(todo => ({
     ...todo,
-    key: String(todo['id'])
+    key: String(todo.id)
   }));
 
   return (
@@ -78,9 +82,9 @@ const TodoList = () => {
       dataSource={dataSource}
       columns={columns}
       pagination={{
-        defaultPageSize: '5',
+        defaultPageSize: 5,
         showSizeChanger: true,
-        pageSizeOptions: [5, 10, 15, 20]
+        pageSizeOptions: ['5', '10', '15', '20']
       }}
     />
   );
