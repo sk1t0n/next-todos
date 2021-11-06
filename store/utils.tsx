@@ -4,12 +4,11 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import { RenderOptions } from '@testing-library/react/types';
 import { EnhancedStore } from '@reduxjs/toolkit/dist/configureStore';
-import { PreloadedState, CombinedState } from 'redux';
-import menuReducer from './slices/menuSlice';
-import todoReducer from './slices/todoSlice';
+import { PreloadedState } from '@reduxjs/toolkit';
+import { RootState, rootReducer } from './index';
 
 type Config = {
-  preloadedState?: PreloadedState<CombinedState<object>>;
+  preloadedState?: PreloadedState<RootState>;
   store?: EnhancedStore;
   renderOptions?: Omit<RenderOptions, 'queries'>;
 };
@@ -19,10 +18,7 @@ export const renderWithRedux = (
   {
     preloadedState,
     store = configureStore({
-      reducer: {
-        menu: menuReducer,
-        todos: todoReducer
-      },
+      reducer: rootReducer,
       preloadedState
     }),
     ...renderOptions
