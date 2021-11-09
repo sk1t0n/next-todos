@@ -1,42 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { Row, Col, Tabs } from 'antd';
-import { useDispatch } from 'react-redux';
-import { setTodos } from '../store/slices/todoSlice';
+import { Row, Col, Tabs, Spin } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTodos } from '../store/slices/todoSlice';
+import { RootState } from '../store';
 import TodoList from '../components/todos/TodosList';
 import AddTodo from '../components/todos/AddTodo';
-import { Todo } from '../components/todos/types';
 
-type FetchTodo = Todo & {title: string};
-
-type Props = {
-  data: Array<FetchTodo>
-};
-
-export async function getStaticProps() {
-  const url = 'https://jsonplaceholder.typicode.com/todos?_limit=30';
-  const res = await fetch(url);
-  const data = await res.json();
-
-  if (Object.keys(data).length === 0) {
-    return {
-      notFound: true
-    };
-  }
-
-  return {
-    props: {
-      data
-    }
-  };
-}
-
-const Home: React.FC<Props> = ({ data }) => {
+const Home: React.FC = () => {
   const dispatch = useDispatch();
-  const todos = data.map(todo => {
-    return {...todo, text: todo.title};
-  });
-  dispatch(setTodos({ todos }));
+
+  useEffect(() => {
+    dispatch(getTodos());
+  }, [dispatch]);
+
+  const isLoading = useSelector((state: RootState) => state.todos.isLoading);
 
   return (
     <>
@@ -50,14 +28,24 @@ const Home: React.FC<Props> = ({ data }) => {
           sm={{ span: 20, offset: 2 }}
           xs={{ span: 22, offset: 1 }}
         >
-          <Tabs defaultActiveKey="1">
-            <Tabs.TabPane tab="Show task list" key="1">
-              <TodoList />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Add a task" key="2">
-              <AddTodo />
-            </Tabs.TabPane>
-          </Tabs>
+          {isLoading
+            ? (
+                <Spin
+                  size="large"
+                  style={{ display: 'flex', justifyContent: 'center', marginTop: '25vh' }}
+                />
+              )
+            : (
+                <Tabs defaultActiveKey="1">
+                  <Tabs.TabPane tab="Show task list" key="1">
+                    <TodoList />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane tab="Add a task" key="2">
+                    <AddTodo />
+                  </Tabs.TabPane>
+                </Tabs>
+              )
+          }
         </Col>
       </Row>
     </>

@@ -3,6 +3,7 @@ import '../styles/globals.less';
 import Layout from '../components/layout';
 import { Provider } from 'react-redux';
 import store from '../store';
+import '../firebase';
 
 const MyApp = ({ Component, pageProps }) => {
   return (

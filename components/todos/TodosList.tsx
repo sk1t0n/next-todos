@@ -4,10 +4,10 @@ import { ColumnsType } from 'antd/es/table';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTodo, removeTodo } from '../../store/slices/todoSlice';
 import { Todo } from './types';
-import { TodoState } from '../../store/slices/todoSlice';
+import { RootState } from '../../store';
 
 const TodoList: React.FC = () => {
-  const todos = useSelector((state: {todos: TodoState}) => state.todos.todos);
+  const todos = useSelector((state: RootState) => state.todos.todos);
   const dispatch = useDispatch();
 
   const columns: ColumnsType<Todo> = [
@@ -31,17 +31,20 @@ const TodoList: React.FC = () => {
       title: 'Completed',
       dataIndex: ['completed'],
       render: (...params) => {
-        const completed = params[0];
+        const completed = params[0] as boolean;
         const id = params[1]['id'];
+        const arg = {
+          id,
+          completed: !completed,
+          callbackSuccess: () => message.info('Task was successfully updated!'),
+          callbackFail: () => message.error('Something went wrong!')
+        };
 
         return (
           <Checkbox
             style={{ display: 'flex', justifyContent: 'center' }}
             defaultChecked={completed}
-            onChange={() => {
-              dispatch(updateTodo({ id }));
-              message.info('The task was successfully updated!');
-            }}
+            onChange={() => dispatch(updateTodo(arg))}
           />
         );
       },
@@ -62,8 +65,11 @@ const TodoList: React.FC = () => {
           danger
           block
           onClick={() => {
-            dispatch(removeTodo({ id }));
-            message.info('The task was successfully deleted!');
+            dispatch(removeTodo({
+              id,
+              callbackSuccess: () => message.info('The task was successfully deleted!'),
+              callbackFail: () => message.error('Something went wrong!')
+            }));
           }}
         >
           Remove

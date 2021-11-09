@@ -5,14 +5,8 @@ import Home from '../../pages/index'
 
 describe('Home', () => {
   it('check the snapshot', () => {
-    const component = <Home data={[]} />;
+    const component = <Home />;
     const {asFragment} = renderWithRedux(component);
     expect(asFragment()).toMatchSnapshot();
-  });
-
-  it('should render the heading', () => {
-    const component = <Home data={[]} />;
-    renderWithRedux(component);
-    expect(screen.getByText(/task list/i)).toBeInTheDocument();
   });
 });

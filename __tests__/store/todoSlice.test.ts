@@ -8,34 +8,11 @@ describe('todoSlice', () => {
 
   it('should return the initial state', () => {
     const action: Action = {type: undefined};
-    const initialState: TodoState = { todos: [] };
-    expect(reducer(undefined, action)).toEqual(initialState);
-  });
-
-  it('should handle a todo being added to an empty list', () => {
-    const previousState: TodoState = { todos: [] };
-    const newTodo: Pick<Todo, 'text'> = { text: 'New todo' };
-    expect(reducer(previousState, addTodo(newTodo)))
-      .toMatchObject({ todos: [newTodo] });
-  });
-
-  it('should handle a todo being added to an existing list', () => {
-    const previousState: TodoState = {
-      todos: [
-        {
-          id: Date.now(),
-          completed: false,
-          text: 'Old todo'
-        }
-      ]
+    const initialState: TodoState = { 
+      todos: [],
+      error: null,
+      isLoading: false
     };
-    const newTodo: Pick<Todo, 'text'> = { text: 'New todo' };
-    expect(reducer(previousState, addTodo(newTodo)))
-      .toMatchObject({
-        todos: [
-          { text: 'Old todo' },
-          { text: 'New todo' }
-        ]
-      });
+    expect(reducer(undefined, action)).toEqual(initialState);
   });
 });
