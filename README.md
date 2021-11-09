@@ -2,7 +2,7 @@
 
 SSR web application for working with the task list.
 
-The project uses React.js, React Hooks, React Testing Library, Next.js, Ant Design.
+The project uses React.js, (Hooks), Redux Toolkit (slices, thunks), Firebase (Firestore), React Testing Library, Next.js, Ant Design, TypeScript.
 
 ![screenshot](screenshot.png)
 
