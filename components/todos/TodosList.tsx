@@ -33,11 +33,13 @@ const TodoList: React.FC = () => {
       render: (...params) => {
         const completed = params[0] as boolean;
         const id = params[1]['id'];
+        let callbackFail: (message: string) => void;
+        callbackFail = (errorMessage) => message.error(errorMessage);
         const arg = {
           id,
           completed: !completed,
           callbackSuccess: () => message.info('Task was successfully updated!'),
-          callbackFail: () => message.error('Something went wrong!')
+          callbackFail
         };
 
         return (
@@ -68,7 +70,7 @@ const TodoList: React.FC = () => {
             dispatch(removeTodo({
               id,
               callbackSuccess: () => message.info('The task was successfully deleted!'),
-              callbackFail: () => message.error('Something went wrong!')
+              callbackFail: (errorMessage) => message.error(errorMessage)
             }));
           }}
         >

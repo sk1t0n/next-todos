@@ -7,15 +7,7 @@ import {
 } from 'firebase/firestore/lite';
 import { db } from '../../../firebase';
 import type { Todo } from '../../../components/todos/types';
-
-export enum StatusCode {
-  OK = 200,
-  CREATED = 201,
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  FORBIDDEN = 403,
-  NOT_FOUND = 404
-}
+import { StatusCode } from '../statusCodes';
 
 export type GetTodosResult = {
   todos?: Todo[];
@@ -45,7 +37,8 @@ const getTodos = async (): Promise<GetTodosResult> => {
     return { todos, status: StatusCode.OK };
   } catch (_error) {
     const error: FirestoreError = _error;
-    return { error, status: StatusCode.BAD_REQUEST };
+    let status = StatusCode.BAD_REQUEST;
+    return { error, status };
   }
 };
 
@@ -56,7 +49,11 @@ const addTodo = async (todo: Todo): Promise<AddTodoResult> => {
     return { todo: modifyTodo, status: StatusCode.CREATED };
   } catch (_error) {
     const error: FirestoreError = _error;
-    return { error, status: StatusCode.BAD_REQUEST };
+    let status = StatusCode.BAD_REQUEST;
+    if (error.code === 'permission-denied') {
+      status = StatusCode.UNAUTHORIZED;
+    }
+    return { error, status };
   }
 };
 

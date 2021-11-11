@@ -1,7 +1,17 @@
 @resetBgColor: #f5222d;
 
+.form {
+  margin-top: 10vh;
+}
+
+.spin {
+  display: flex;
+  justify-content: center;
+  margin-top: 17vh;
+}
+
 .reset {
-  margin-left: 10px;
+  margin-left: 0.9rem;
   background-color: @resetBgColor;
   color: #fff;
 
@@ -10,5 +20,17 @@
     background-color: lighten(@resetBgColor, 10%);
     color: #fff;
     border-color: #fff;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .submit {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .reset {
+    margin-left: 0;
+    margin-top: 30px;
+    width: 100%;
   }
 }

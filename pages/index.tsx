@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { Row, Col, Tabs, Spin } from 'antd';
+import { Row, Col, Tabs, Spin, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTodos } from '../store/slices/todoSlice';
 import { RootState } from '../store';
@@ -11,7 +11,9 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTodos());
+    let callbackFail: (message: string) => void;
+    callbackFail = (errorMessage) => message.error(errorMessage);
+    dispatch(getTodos({ callbackFail }));
   }, [dispatch]);
 
   const isLoading = useSelector((state: RootState) => state.todos.isLoading);

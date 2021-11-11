@@ -19,10 +19,12 @@ const AddTodo: React.FC = () => {
   const isLoading = useSelector((state: RootState) => state.todos.isLoading);
 
   const onFinish: FinishHandler = ({ text }) => {
+    let callbackFail: (message: string) => void;
+    callbackFail = (errorMessage) => message.error(errorMessage);
     const arg = {
       text,
       callbackSuccess: () => message.info('Task was successfully added!'),
-      callbackFail: () => message.error('Something went wrong!')
+      callbackFail
     };
     dispatch(addTodo(arg));
     form.resetFields();
@@ -36,15 +38,12 @@ const AddTodo: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Spin
-        size="large"
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '17vh' }}
-      />
-    );
+      <Spin size="large" className={styles.spin} />
+    )
   } else {
     return (
       <Form
-        style={{ marginTop: 20 }}
+        className={styles.form}
         form={form}
         name="add-todo"
         labelCol={{ span: 6 }}
@@ -60,19 +59,15 @@ const AddTodo: React.FC = () => {
           rules={[
             {
               required: true,
-              message: 'Please enter the task!'
+              message: 'Please input your task!'
             },
           ]}
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            offset: 6,
-            span: 18,
-          }}
-        >
-          <Button type="primary" htmlType="submit">
+
+        <Form.Item wrapperCol={{sm: { offset: 6, span: 18 }}}>
+          <Button type="primary" htmlType="submit" className={styles.submit}>
             Submit
           </Button>
           <Button onClick={onReset} className={styles.reset}>

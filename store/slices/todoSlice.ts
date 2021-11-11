@@ -1,8 +1,8 @@
-import { FirestoreErrorCode } from '@firebase/firestore/dist/lite';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Todo } from '../../components/todos/types';
 import type { GetTodosResult, AddTodoResult } from '../../pages/api/todos';
 import type { UpdateTodoResult, RemoveTodoResult } from '../../pages/api/todos/[id]';
+import { StatusCode } from '../../pages/api/statusCodes';
 
 export type TodoState = {
   todos: Todo[];
@@ -10,10 +10,14 @@ export type TodoState = {
   isLoading: boolean;
 }
 
+type AsyncThunkArgGetTodos = {
+  callbackFail: (message: string) => void;
+};
+
 type AsyncThunkArgAddTodo = {
   text: string;
   callbackSuccess: () => void;
-  callbackFail: () => void;
+  callbackFail: (message: string) => void;
 };
 
 type AsyncThunkReturnTypeUpdateTodo = {
@@ -25,13 +29,13 @@ type AsyncThunkArgUpdateTodo = {
   id: string;
   completed: boolean;
   callbackSuccess: () => void;
-  callbackFail: () => void;
+  callbackFail: (message: string) => void;
 };
 
 type AsyncThunkArgRemoveTodo = {
   id: string;
   callbackSuccess: () => void;
-  callbackFail: () => void;
+  callbackFail: (message: string) => void;
 };
 
 const initialState: TodoState = {
@@ -40,27 +44,35 @@ const initialState: TodoState = {
   isLoading: false
 };
 
-const getErrorMessageByFirestoreErrorCode = (code: FirestoreErrorCode): string => {
-  const messages = {
-    'unknown': 'Something went wrong',
-  };
+const getErrorMessageByStatusCode = (status: StatusCode): string => {
+  let message;
 
-  return messages[code];
+  switch (status) {
+    case StatusCode.BAD_REQUEST:
+      message = 'Something went wrong!';
+      break;
+    case StatusCode.UNAUTHORIZED:
+      message = 'You are not logged in! Log in and try again.';
+      break;
+  }
+
+  return message;
 }
 
-export const getTodos = createAsyncThunk<Array<Todo>>(
+export const getTodos = createAsyncThunk<Array<Todo>, AsyncThunkArgGetTodos>(
   'todos/getTodos',
-  async (_, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/todos`);
       const data: GetTodosResult = await response.json();
       if (data.todos) {
         return data.todos;
       } else {
-        const message = getErrorMessageByFirestoreErrorCode(data.error.code);
+        const message = getErrorMessageByStatusCode(data.status);
         throw new Error(message);
       }
     } catch (error) {
+      arg.callbackFail(error.message);
       return rejectWithValue(error.message);
     }
   }
@@ -81,11 +93,11 @@ export const addTodo = createAsyncThunk<Todo, AsyncThunkArgAddTodo>(
         arg.callbackSuccess();
         return data.todo;
       } else {
-        const message = getErrorMessageByFirestoreErrorCode(data.error.code);
+        const message = getErrorMessageByStatusCode(data.status);
         throw new Error(message);
       }
     } catch (error) {
-      arg.callbackFail();
+      arg.callbackFail(error.message);
       return rejectWithValue(error.message);
     }
   }
@@ -106,11 +118,11 @@ export const updateTodo = createAsyncThunk<AsyncThunkReturnTypeUpdateTodo, Async
         arg.callbackSuccess();
         return { id: data.id, updatedFields: data.updatedFields };
       } else {
-        const message = getErrorMessageByFirestoreErrorCode(data.error.code);
+        const message = getErrorMessageByStatusCode(data.status);
         throw new Error(message);
       }
     } catch (error) {
-      arg.callbackFail();
+      arg.callbackFail(error.message);
       return rejectWithValue(error.message);
     }
   }
@@ -129,11 +141,11 @@ export const removeTodo = createAsyncThunk<string, AsyncThunkArgRemoveTodo>(
         arg.callbackSuccess();
         return data.id;
       } else {
-        const message = getErrorMessageByFirestoreErrorCode(data.error.code);
+        const message = getErrorMessageByStatusCode(data.status);
         throw new Error(message);
       }
     } catch (error) {
-      arg.callbackFail();
+      arg.callbackFail(error.message);
       return rejectWithValue(error.message);
     }
   }
