@@ -48,7 +48,6 @@ const AddTodo: React.FC = () => {
         name="add-todo"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
-        initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"

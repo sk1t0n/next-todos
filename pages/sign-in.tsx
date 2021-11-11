@@ -3,36 +3,37 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
-import { Row, Col, Form, Input, Button, Spin, message } from 'antd';
+import { Row, Col, Form, Input, Checkbox, Button, Spin, message } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { setCurrent as setCurrentMenuItem } from '../store/slices/menuSlice';
-import { registerUser } from '../store/slices/userSlice';
+import { signIn as signInAction } from '../store/slices/userSlice';
 import { RootState } from '../store';
-import styles from '../styles/Register.module.less';
+import styles from '../styles/SignIn.module.less';
 
 type FinishHandler = (
   values: {
     email: string,
-    password1: string,
-    password2: string,
+    password: string,
+    remember: boolean
   }
 ) => void;
 
-const Register: React.FC = () => {
+const SignIn: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setCurrentMenuItem({ current: 'register' }));
+    dispatch(setCurrentMenuItem({ current: 'sign-in' }));
   }, [dispatch]);
 
   const isLoading = useSelector((state: RootState) => state.user.isLoading);
 
-  const register = (email: string, password: string): void => {
+  const signIn = (email: string, password: string, remember: boolean): void => {
     const arg = {
       email,
       password,
       callbackSuccess: () => {
-        message.success('User is successfully registered!');
+        message.success('User is successfully logged in!');
         dispatch(setCurrentMenuItem({ current: 'home' }));
         setTimeout(() => {
           router.push('/');
@@ -40,42 +41,31 @@ const Register: React.FC = () => {
       },
       callbackFail: (errorMessage) => message.error(errorMessage)
     };
-    dispatch(registerUser(arg));
+    dispatch(signInAction(arg));
   };
 
-  const onFinish: FinishHandler = ({ email, password1, password2 }) => {
-    if (password1 !== password2) {
-      message.error('Passwords are not equal!');
-      return;
-    }
-
-    register(email, password1);
+  const onFinish: FinishHandler = ({ email, password, remember }) => {
+    signIn(email, password, remember);
   };
 
   const onFinishFailed = (e: ValidateErrorEntity) => {
     message.error(e.errorFields[0].errors[0]);
   };
 
-  const password1Rules = [
+  const passwordRules = [
     { required: true, message: 'Please input your password!' },
     { min: 6, message: 'Password should be at least 6 characters' },
   ];
-
-  const password2Rules = [
-    { required: true, message: 'Please input your password again!' },
-    { min: 6, message: 'Password should be at least 6 characters' },
-  ];
-
   return (
     <>
       <Head>
-        <title>Register</title>
+        <title>Sign In</title>
       </Head>
       <Row>
         <Col
-          lg={{ span: 10, offset: 7 }}
-          md={{ span: 14, offset: 5 }}
-          sm={{ span: 16, offset: 4 }}
+          lg={{ span: 6, offset: 9 }}
+          md={{ span: 8, offset: 8 }}
+          sm={{ span: 14, offset: 5 }}
           xs={{ span: 20, offset: 2 }}
         >
           { isLoading 
@@ -83,32 +73,39 @@ const Register: React.FC = () => {
             : (
                 <Form
                   className={styles.form}
-                  name="register"
-                  labelCol={{sm: { span: 8 }}}
-                  wrapperCol={{sm: { span: 16 }}}
+                  name="sign-in"
+                  initialValues={{ remember: false }}
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
                   autoComplete="off"
                 >
                   <Form.Item
-                    label="Email"
+                    className={styles.formItem}
                     name="email"
                     rules={[{ required: true, message: 'Please input your email!' }]}
                   >
-                    <Input />
+                    <Input prefix={<UserOutlined />} placeholder="Email" />
                   </Form.Item>
       
-                  <Form.Item label="Password" name="password1" rules={password1Rules}>
-                    <Input.Password />
+                  <Form.Item
+                    className={styles.formItem}
+                    name="password"
+                    rules={passwordRules}
+                  >
+                    <Input.Password prefix={<LockOutlined />} placeholder="Password" />
                   </Form.Item>
       
-                  <Form.Item label="Password again" name="password2" rules={password2Rules}>
-                    <Input.Password />
+                  <Form.Item
+                    className={styles.formItem}
+                    name="remember"
+                    valuePropName="checked"
+                  >
+                    <Checkbox>Remember me</Checkbox>
                   </Form.Item>
       
-                  <Form.Item wrapperCol={{sm: { offset: 8, span: 16 }}}>
+                  <Form.Item>
                     <Button type="primary" htmlType="submit" className={styles.button}>
-                      Register
+                      Sign In
                     </Button>
                   </Form.Item>
                 </Form>
@@ -120,4 +117,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default SignIn;

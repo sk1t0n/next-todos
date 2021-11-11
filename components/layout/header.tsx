@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrent as setCurrentMenuItem } from '../../store/slices/menuSlice';
 import { MenuItems } from '../navbar/menu';
 import { MenuState } from '../../store/slices/menuSlice';
+import { RootState } from '../../store';
 
 const Header: React.FC = () => {
   const [visibleDrawer, setVisibleDrawer] = useState(false);
@@ -26,14 +27,18 @@ const Header: React.FC = () => {
     dispatch(setCurrentMenuItem({ current: item.key }));
   };
 
+  const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+
   const items: MenuItems = {
     leftMenu: [
       { key: 'home', text: 'Home', path: '/' },
       { key: 'about', text: 'About', path: '/about' }
     ],
-    rightMenu: [
+    rightMenu: !isLoggedIn ? [
       { key: 'register', text: 'Register', path: '/register' },
-      { key: 'signin', text: 'Sign In', path: '/sign-in' }
+      { key: 'sign-in', text: 'Sign In', path: '/sign-in' }
+    ] : [
+      { key: 'sign-out', text: 'Sign Out', path: '/sign-out' }
     ]
   };
 

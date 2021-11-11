@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { User } from 'firebase/auth';
 import { StatusCode } from '../../pages/api/statusCodes';
 import type { RegisterResult } from '../../pages/api/users/register';
+import type { SignInResult } from '../../pages/api/users/sign-in';
 
 export type UserState = {
   isLoading: boolean;
@@ -22,6 +23,13 @@ type AsyncThunkArgRegisterUser = {
   callbackFail: (message: string) => void;
 };
 
+type AsyncThunkArgSignIn = {
+  email: string;
+  password: string;
+  callbackSuccess: () => void;
+  callbackFail: (message: string) => void;
+};
+
 const getErrorMessageByStatusCode = (status: StatusCode): string => {
   let message;
 
@@ -31,6 +39,12 @@ const getErrorMessageByStatusCode = (status: StatusCode): string => {
       break;
     case StatusCode.CONFLICT:
       message = 'This email is already registered!';
+      break;
+    case StatusCode.FORBIDDEN:
+      message = 'Wrong email or password!'
+      break;
+    case StatusCode.NOT_FOUND:
+      message = 'Email not found!';
       break;
   }
 
@@ -62,6 +76,31 @@ export const registerUser = createAsyncThunk<User, AsyncThunkArgRegisterUser>(
   }
 );
 
+export const signIn = createAsyncThunk<User, AsyncThunkArgSignIn>(
+  'users/sign-in',
+  async (arg, { rejectWithValue }) => {
+    try {
+      const dataToSerialize = { email: arg.email, password: arg.password };
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/sign-in`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataToSerialize)
+      });
+      const data: SignInResult = await response.json();
+      if (data.user) {
+        arg.callbackSuccess();
+        return data.user;
+      } else {
+        const message = getErrorMessageByStatusCode(data.status);
+        throw new Error(message);
+      }
+    } catch (error) {
+      arg.callbackFail(error.message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -71,11 +110,22 @@ const userSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(registerUser.fulfilled, (state, action) => {
+    builder.addCase(registerUser.fulfilled, (state) => {
+      state.isLoading = false;
+    });
+    builder.addCase(registerUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as string;
+    });
+    builder.addCase(signIn.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(signIn.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isLoggedIn = action.payload ? true : false;
     });
-    builder.addCase(registerUser.rejected, (state, action) => {
+    builder.addCase(signIn.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload as string;
     });

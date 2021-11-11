@@ -15,7 +15,7 @@ describe('Menu', () => {
       ],
       rightMenu: [
         { key: 'register', text: 'Register', path: '/register' },
-        { key: 'signin', text: 'Sign In', path: '/sign-in' }
+        { key: 'sign-in', text: 'Sign In', path: '/sign-in' }
       ]
     };
     const { asFragment } = render(
