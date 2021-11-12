@@ -30,7 +30,7 @@ const handler = async (
   res: NextApiResponse<SignOutResult>
 ) => {
   const cors = Cors({
-    methods: ['GET'],
+    methods: ['GET', 'OPTIONS'],
   });
   await runMiddleware(req, res, cors);
 

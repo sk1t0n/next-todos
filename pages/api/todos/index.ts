@@ -64,7 +64,7 @@ const handler = async (
   res: NextApiResponse<Response>
 ) => {
   const cors = Cors({
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'OPTIONS'],
   });
   await runMiddleware(req, res, cors);
 

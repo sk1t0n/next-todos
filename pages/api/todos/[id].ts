@@ -64,7 +64,7 @@ const handler = async (
   res: NextApiResponse<Response>
 ) => {
   const cors = Cors({
-    methods: ['PATCH', 'DELETE'],
+    methods: ['PATCH', 'DELETE', 'OPTIONS'],
   });
   await runMiddleware(req, res, cors);
 
