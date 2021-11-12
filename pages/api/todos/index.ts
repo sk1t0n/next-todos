@@ -1,3 +1,4 @@
+import Cors from 'cors';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   collection,
@@ -8,6 +9,7 @@ import {
 import { db } from '../../../firebase';
 import type { Todo } from '../../../components/todos/types';
 import { StatusCode } from '../statusCodes';
+import { runMiddleware } from '../middleware';
 
 export type GetTodosResult = {
   todos?: Todo[];
@@ -57,7 +59,15 @@ const addTodo = async (todo: Todo): Promise<AddTodoResult> => {
   }
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Response>
+) => {
+  const cors = Cors({
+    methods: ['GET', 'POST'],
+  });
+  await runMiddleware(req, res, cors);
+
   if (req.method === 'GET') {
     const result = await getTodos();
     res.status(result.status).json(result);

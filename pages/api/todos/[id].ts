@@ -1,3 +1,4 @@
+import Cors from 'cors';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   collection,
@@ -9,6 +10,7 @@ import {
 import { db } from '../../../firebase';
 import type { Todo } from '../../../components/todos/types';
 import { StatusCode } from '../statusCodes';
+import { runMiddleware } from '../middleware';
 
 export type UpdateTodoResult = {
   id?: string;
@@ -57,7 +59,15 @@ const removeTodo = async (id: string): Promise<RemoveTodoResult> => {
   }
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Response>
+) => {
+  const cors = Cors({
+    methods: ['PATCH', 'DELETE'],
+  });
+  await runMiddleware(req, res, cors);
+
   if (req.method === 'PATCH') {
     const id = req.query.id as string;
     const fieldsToUpdate: Partial<Todo> = {

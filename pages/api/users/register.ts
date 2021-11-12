@@ -1,3 +1,4 @@
+import Cors from 'cors';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   AuthError,
@@ -6,6 +7,7 @@ import {
   createUserWithEmailAndPassword
 } from 'firebase/auth';
 import { StatusCode } from '../statusCodes';
+import { runMiddleware } from '../middleware';
 
 export type RegisterResult = {
   user?: User;
@@ -28,7 +30,15 @@ const register = async (email: string, password: string): Promise<RegisterResult
   }
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<RegisterResult>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<RegisterResult>
+) => {
+  const cors = Cors({
+    methods: ['POST'],
+  });
+  await runMiddleware(req, res, cors);
+
   if (req.method === 'POST') {
     const email = req.body.email;
     const password = req.body.password;

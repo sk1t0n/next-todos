@@ -1,3 +1,4 @@
+import Cors from 'cors';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   AuthError,
@@ -5,6 +6,7 @@ import {
   signOut as signOutFirebase
 } from 'firebase/auth';
 import { StatusCode } from '../statusCodes';
+import { runMiddleware } from '../middleware';
 
 export type SignOutResult = {
   error?: AuthError;
@@ -27,6 +29,11 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<SignOutResult>
 ) => {
+  const cors = Cors({
+    methods: ['GET'],
+  });
+  await runMiddleware(req, res, cors);
+
   if (req.method === 'GET') {
     const result = await signOut();
     res.status(result.status).json(result);

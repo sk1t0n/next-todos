@@ -1,3 +1,4 @@
+import Cors from 'cors';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   AuthError,
@@ -6,6 +7,7 @@ import {
   signInWithEmailAndPassword
 } from 'firebase/auth';
 import { StatusCode } from '../statusCodes';
+import { runMiddleware } from '../middleware';
 
 export type SignInResult = {
   user?: User;
@@ -31,7 +33,15 @@ const signIn = async (email: string, password: string): Promise<SignInResult> =>
   }
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<SignInResult>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<SignInResult>
+) => {
+  const cors = Cors({
+    methods: ['POST'],
+  });
+  await runMiddleware(req, res, cors);
+
   if (req.method === 'POST') {
     const email = req.body.email;
     const password = req.body.password;
