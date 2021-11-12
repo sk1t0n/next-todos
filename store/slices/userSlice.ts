@@ -51,12 +51,14 @@ const getErrorMessageByStatusCode = (status: StatusCode): string => {
   return message;
 };
 
+const API_HOST = process.env.API_HOST;
+
 export const registerUser = createAsyncThunk<User, AsyncThunkArgRegisterUser>(
   'users/registerUser',
   async (arg, { rejectWithValue }) => {
     try {
       const dataToSerialize = { email: arg.email, password: arg.password };
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/register`, {
+      const response = await fetch(`${API_HOST}/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSerialize)
@@ -81,7 +83,7 @@ export const signIn = createAsyncThunk<User, AsyncThunkArgSignIn>(
   async (arg, { rejectWithValue }) => {
     try {
       const dataToSerialize = { email: arg.email, password: arg.password };
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/users/sign-in`, {
+      const response = await fetch(`${API_HOST}/users/sign-in`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSerialize)

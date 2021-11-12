@@ -5,4 +5,7 @@ module.exports = withAntdLess({
   modifyVars: {
     '@primary-color': '#0050b3',
   },
+  env: {
+    API_HOST: process.env.API_HOST
+  }
 });

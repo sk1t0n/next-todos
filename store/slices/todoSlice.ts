@@ -59,11 +59,13 @@ const getErrorMessageByStatusCode = (status: StatusCode): string => {
   return message;
 }
 
+const API_HOST = process.env.API_HOST;
+
 export const getTodos = createAsyncThunk<Array<Todo>, AsyncThunkArgGetTodos>(
   'todos/getTodos',
   async (arg, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/todos`);
+      const response = await fetch(`${API_HOST}/todos`);
       const data: GetTodosResult = await response.json();
       if (data.todos) {
         return data.todos;
@@ -83,7 +85,7 @@ export const addTodo = createAsyncThunk<Todo, AsyncThunkArgAddTodo>(
   async (arg, { rejectWithValue }) => {
     try{
       const dataToSerialize: Pick<Todo, 'text'> = { text: arg.text };
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/todos`, {
+      const response = await fetch(`${API_HOST}/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSerialize)
@@ -103,12 +105,14 @@ export const addTodo = createAsyncThunk<Todo, AsyncThunkArgAddTodo>(
   }
 );
 
-export const updateTodo = createAsyncThunk<AsyncThunkReturnTypeUpdateTodo, AsyncThunkArgUpdateTodo>(
+export const updateTodo = createAsyncThunk
+<AsyncThunkReturnTypeUpdateTodo, AsyncThunkArgUpdateTodo>
+(
   'todos/updateTodo',
   async (arg, { rejectWithValue }) => {
     try {
       const dataToSerialize: Pick<Todo, 'completed'> = { completed: arg.completed };
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/todos/${arg.id}`, {
+      const response = await fetch(`${API_HOST}/todos/${arg.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSerialize)
@@ -132,7 +136,7 @@ export const removeTodo = createAsyncThunk<string, AsyncThunkArgRemoveTodo>(
   'todos/removeTodo',
   async (arg, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/todos/${arg.id}`, {
+      const response = await fetch(`${API_HOST}/todos/${arg.id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       });
